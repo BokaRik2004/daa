@@ -1,0 +1,85 @@
+#include <iostream>
+using namespace std;
+#define INF 99999
+class Graph
+{
+public:
+int v, e;
+int x[100], y[100], cost[100];
+int p[100];
+Graph(); // Constructor
+void input();
+void kruskal();
+};
+// Constructor definition
+Graph::Graph()
+{
+int i;
+for (i = 0; i < 100; i++)
+p[i] = 0;
+}
+// Input function
+void Graph::input()
+{
+int i;
+14
+cout << "Enter the number of vertices: ";
+cin >> v;
+cout << "Enter the number of edges: ";
+cin >> e;
+for (i = 0; i < e; i++)
+{
+cout << "Enter end vertices for edge " << i + 1 << ": ";
+cin >> x[i] >> y[i];
+cout << "Enter cost for edge " << i + 1 << ": ";
+cin >> cost[i];
+}
+}
+// Kruskal's algorithm
+void Graph::kruskal()
+{
+int edgesSelected = 0;
+int totalCost = 0;
+cout << "\nEdges selected in MST:\n";
+while (edgesSelected < v - 1)
+{
+int minCost = INF;
+int minIndex = -1;
+int i;
+// Find edge with minimum cost
+for (i = 0; i < e; i++)
+{
+if (cost[i] < minCost)
+{
+minCost = cost[i];
+minIndex = i;
+}
+}
+if (minIndex == -1)
+break;
+int vx = x[minIndex];
+int vy = y[minIndex];
+// Cycle checking using predecessor array
+if (p[vy - 1] == 0)
+{
+p[vy - 1] = vx;
+edgesSelected++;
+totalCost += minCost;
+cout << "(V" << vx << "
+<< minCost << endl;
+,
+" << "V" << vy << ") = "
+15
+}
+// Mark edge as used
+cost[minIndex] = INF;
+}
+cout << "Total cost of MST: " << totalCost << endl;
+}
+{
+int main()
+Kruskal k; k.input();
+k.kruskal();
+return 0;
+// Constructor automatically called
+}
