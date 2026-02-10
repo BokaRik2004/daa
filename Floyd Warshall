@@ -1,0 +1,124 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+#define MAX 100
+#define INF 9999
+
+int main()
+{
+    int v, e;
+    int cost[MAX][MAX], prev[MAX][MAX];
+    int i, j, k, l, r, value;
+    int p, q;
+
+    cout << "\nEnter number of vertices: ";
+    cin >> v;
+
+    cout << "\nEnter number of edges: ";
+    cin >> e;
+
+    /* Cost matrix initialization */
+    for (i = 0; i < v; i++)
+    {
+        for (j = 0; j < v; j++)
+        {
+            if (i == j)
+                cost[i][j] = 0;
+            else
+                cost[i][j] = INF;
+        }
+    }
+
+    cout << "\n***Please enter 9999 for the edge whose cost is infinity***";
+
+    /* Input edges */
+    for (i = 0; i < e; i++)
+    {
+        cout << "\nEnter end vertices for edge " << i + 1 << ": ";
+        cin >> l >> r;
+        l--;
+        r--;
+
+        cout << "Enter cost for edge " << i + 1 << ": ";
+        cin >> value;
+
+        cost[l][r] = value;
+    }
+
+    cout << "\nInitial cost matrix:\n";
+    for (i = 0; i < v; i++)
+    {
+        for (j = 0; j < v; j++)
+        {
+            if (cost[i][j] == INF)
+                cout << "INF ";
+            else
+                cout << cost[i][j] << " ";
+        }
+        cout << "\n";
+    }
+
+    /* Floyd-Warshall with prev matrix */
+    for (i = 0; i < v; i++)
+    {
+        /* Copy cost into prev */
+        for (j = 0; j < v; j++)
+        {
+            for (k = 0; k < v; k++)
+            {
+                prev[j][k] = cost[j][k];
+            }
+        }
+
+        /* Update using prev */
+        for (j = 0; j < v; j++)
+        {
+            for (k = 0; k < v; k++)
+            {
+                if (prev[j][i] != INF && prev[i][k] != INF)
+                {
+                    if (cost[j][k] > prev[j][i] + prev[i][k])
+                    {
+                        cost[j][k] = prev[j][i] + prev[i][k];
+                    }
+                }
+            }
+        }
+
+        /* Print iteration */
+        cout << "\nFloyd-Warshall iteration " << i + 1 << ":\n";
+        for (p = 0; p < v; p++)
+        {
+            for (q = 0; q < v; q++)
+            {
+                if (cost[p][q] == INF)
+                    cout << "INF ";
+                else
+                    cout << cost[p][q] << " ";
+            }
+            cout << "\n";
+        }
+    }
+
+    /* Print final cost matrix */
+    cout << "\n=============================================\n";
+    cout << "FINAL ALL-PAIRS SHORTEST PATH MATRIX:\n";
+    cout << "=============================================\n";
+
+    for (i = 0; i < v; i++)
+    {
+        for (j = 0; j < v; j++)
+        {
+            if (cost[i][j] == INF)
+                cout << "INF ";
+            else
+                cout << cost[i][j] << " ";
+        }
+        cout << "\n";
+    }
+
+    cout << "=============================================\n";
+    return 0;
+}
