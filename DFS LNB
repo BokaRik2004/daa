@@ -1,0 +1,102 @@
+#include<iostream>
+using namespace std;
+#define MAX 50
+class Dfs{
+public:
+int adj[MAX][MAX],visited[MAX],treeU[MAX],treeV[MAX],i,j,v,e,edgeCount;
+Dfs();
+void inputAdjacencyMatrix();
+void displayAdjacencyMatrix();
+void dfs(int i);
+};
+Dfs::Dfs() // Constructor to initialize graph
+{
+cout<<"Enter the number of vertices: ";
+cin>>v;
+cout<<"Enter the number of edges: ";
+cin>>e;
+for(i=0;i<v;i++) {
+// Initialize adjacency matrix and visited array
+for(j=0;j<v;j++)
+adj[i][j]=0;
+visited[i]=0; // Mark all vertices as unvisited
+}
+}
+{
+void Dfs::inputAdjacencyMatrix() int k,x,y;
+for(k=0;k<e;k++)
+{
+cout<<"Enter end vertices for edge e"<<k+1<<": ";
+cin>>x>>y;
+x--;
+y--;
+adj[x][y]=1;
+adj[y][x]=1;
+// Function to input edges of the graph
+}
+}
+void Dfs::dfs(int i) {
+// Recursive DFS function
+int j;
+cout<<i+1<<" "; // Print current vertex
+visited[i]=1; // Mark vertex as visited
+for(j=0;j<v;j++)// Visit all adjacent unvisited vertices
+{
+if(visited[j]==0&&adj[i][j]==1)
+{
+// store spanning tree edge
+treeU[edgeCount] = i;
+6
+treeV[edgeCount] = j;
+edgeCount++;
+dfs(j);
+}
+}
+}
+int main()
+{
+Dfs ob; // Create object of Dfs class
+int s,i,c=0;
+ob.inputAdjacencyMatrix();
+ob.displayAdjacencyMatrix();
+cout<<"\nEnter the starting vertex: ";
+cin>>s;
+s--;
+if(ob.visited[s] == 0)
+{
+c++;
+ob.edgeCount=0;
+cout<<"\nComponent "<<c <<":\n";
+cout<<"DFS traversal: ";
+ob.dfs(s);
+cout << "\nSpanning tree edges:\n";
+for(i=0;i<ob.edgeCount;i++)
+{
+cout<<i+1<<"
+.e"<<i+1<<"=("<<ob.treeU[i]+1<<"
+,
+"<<ob.treeV[i]+1<<")\n";
+}
+}
+for(int i = 0; i < ob.v; i++) // Perform DFS for remaining disconnected
+components
+{
+if(ob.visited[i] == 0)
+{
+c++;
+ob.edgeCount=0;
+cout<<"\nComponent"<<c<<":\n";
+cout<<"DFS traversal: ";
+ob.dfs(i);
+cout<<endl;
+for(i=0;i<ob.edgeCount;i++)
+{
+cout<<i+1<<"
+.e"<<i+1<<"=("<<ob.treeU[i]+1<<"
+,
+"<<ob.treeV[i]+1<<")\n";
+}
+}
+}
+cout<<"\nTotal number of component is :"<<c;
+}
