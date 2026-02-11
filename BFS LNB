@@ -1,0 +1,98 @@
+#include <iostream>
+using namespace std;
+#define MAX 50
+class Graph
+{ public:
+int n;
+int adj[MAX][MAX];
+Graph(int v);
+void addEdge(int u, int v);
+void inputEdges(int e);
+1
+void BFS(int start, int visited[],int traversal[], int &tcount,int span[][2], int &ecount);
+void processGraph();
+};
+Graph::Graph(int v) { // Constructor
+n = v;
+for(int i=0;i<n;i++)
+for(int j=0;j<n;j++)
+adj[i][j] = 0;
+}
+void Graph::addEdge(int u, int v) { adj[u][v] = 1;
+adj[v][u] = 1;
+//Add Edge
+}
+void Graph::inputEdges(int e) { //Input Edges
+int u,v;
+for(int i=0;i<e;i++) {
+cout << "Enter end vertices of edge " << i+1<< " (u v): ";
+cin >> u >> v;
+addEdge(u,v);
+}
+}
+// BFS
+{
+void Graph::BFS(int start, int visited[],int traversal[], int &tcount, int span[][2], int &ecount)
+int q[MAX];
+int front = 0, rear = 0;
+visited[start] = 1;
+q[rear++] = start;
+tcount = 0;
+ecount = 0;
+while(front != rear)
+{ int curr =
+q[front++];
+traversal[tcount++] = curr;
+for(int i=0;i<n;i++) {
+if(adj[curr][i] == 1 && visited[i] == 0)
+{ visited[i] = 1;
+q[rear++] = i;
+span[ecount][0] = curr;
+span[ecount][1] = i;
+ecount++;
+}
+}
+}
+}
+// Process Graph
+void Graph::processGraph() {
+2
+}
+int visited[MAX] = {0};
+int components = 0;
+for(int i=0;i<n;i++)
+{ if(visited[i] == 0) {
+components++;
+int traversal[MAX], tcount;
+int span[MAX][2], ecount;
+BFS(i, visited, traversal, tcount, span, ecount);
+cout << "Component " << components <<":"<<endl;
+cout<< "BFS traversal: ";
+for(int j=0;j<tcount;j++)
+cout << traversal[j] << " ";
+cout << endl;
+cout << "Spanning tree edges:" << endl;
+for(int j=0;j<ecount;j++){
+cout << j+1<<"
+.
+"<<" e" << j+1<< " =";
+cout <<" (v" << span[j][0] << "
+, v" << span[j][1]<<")"<< endl;
+cout << endl;
+}
+}
+cout << "Total number of components: " << components << endl;
+}
+int main() {
+int vertices, edges, startVertex;
+cout << "Enter number of vertices: ";
+cin >> vertices;
+Graph g(vertices);
+cout << "Enter number of edges: ";
+cin >> edges;
+g.inputEdges(edges);
+cout << "Enter starting vertex for BFS: ";
+cin >> startVertex;
+g.processGraph();
+return 0;
+}
